@@ -1,0 +1,13 @@
+# Configurações do servidor Eureka
+eureka:
+  instance:
+    hostname: localhost  # Define o hostname da instância Eureka
+  client:
+    registerWithEureka: false  # Desativa o registro do cliente com o servidor Eureka
+    fetchRegistry: false  # Desativa a busca do registro do servidor Eureka
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/  # URL do serviço Eureka
+
+# Configurações do servidor
+server:
+  port: 8761  # Define a porta do servidor
