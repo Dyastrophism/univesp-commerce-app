@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      username: customer  # Nome de usuário para autenticação no MongoDB
+      password: customer  # Senha para autenticação no MongoDB
+      database: customer  # Nome do banco de dados MongoDB a ser usado
+      host: localhost  # Host onde o MongoDB está sendo executado
+      port: 27017  # Porta onde o MongoDB está sendo executado
+      authentication-database: admin  # Banco de dados de autenticação do MongoDB
+
+server:
+  port: 8090  # Porta onde o servidor Spring Boot será executado
