@@ -1,0 +1,21 @@
+spring: # Configurações do Spring
+  datasource: # Configurações do datasource (fonte de dados)
+    url: jdbc:postgresql://localhost:5432/product # URL de conexão com o banco de dados PostgreSQL
+    username: postgres # Nome de usuário do banco de dados
+    password: postgres # Senha do banco de dados
+    driver-class-name: org.postgresql.Driver # Classe do driver JDBC para PostgreSQL
+  jpa: # Configurações do JPA (Java Persistence API)
+    hibernate: # Configurações específicas do Hibernate
+      ddl-auto: validate # Valida o esquema do banco de dados com base nas entidades JPA
+    database: postgresql # Tipo de banco de dados utilizado
+    database-platform: org.hibernate.dialect.PostgreSQLDialect # Dialeto do Hibernate para PostgreSQL
+  flyway: # Configurações do Flyway (migração de banco de dados)
+    baseline-on-migrate: true # Cria uma linha de base ao migrar
+    enabled: true # Habilita o Flyway
+    baseline-description: "init" # Descrição da linha de base
+    baseline-version: 0 # Versão da linha de base
+    user: ${spring.datasource.username} # Nome de usuário para o Flyway (usando a configuração do datasource)
+    password: ${spring.datasource.password} # Senha para o Flyway (usando a configuração do datasource)
+
+server: # Configurações do servidor
+  port: 8050 # Porta em que o servidor irá rodar
