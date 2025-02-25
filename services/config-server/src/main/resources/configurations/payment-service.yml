@@ -1,0 +1,21 @@
+spring:
+  datasource: # Configurações do datasource (fonte de dados)
+    url: jdbc:postgresql://localhost:5432/payment # URL de conexão com o banco de dados PostgreSQL
+    username: postgres # Nome de usuário do banco de dados
+    password: postgres # Senha do banco de dados
+    driver-class-name: org.postgresql.Driver # Classe do driver JDBC para PostgreSQL
+  jpa: # Configurações do JPA (Java Persistence API)
+    hibernate: # Configurações específicas do Hibernate
+      ddl-auto: validate # Valida o esquema do banco de dados com base nas entidades JPA
+    database: postgresql # Tipo de banco de dados utilizado
+    database-platform: org.hibernate.dialect.PostgreSQLDialect # Dialeto do Hibernate para PostgreSQL
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: paymentConfirmation:com.univesp.ecommerce.notification.PaymentNotificationRequest;
+
+server:
+  port: 8060

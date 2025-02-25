@@ -6,6 +6,8 @@ import com.univesp.ecommerce.kafka.OrderConfirmation;
 import com.univesp.ecommerce.kafka.OrderProducer;
 import com.univesp.ecommerce.orderline.OrderLineRequest;
 import com.univesp.ecommerce.orderline.OrderLineService;
+import com.univesp.ecommerce.payment.PaymentClient;
+import com.univesp.ecommerce.payment.PaymentRequest;
 import com.univesp.ecommerce.product.ProductClient;
 import com.univesp.ecommerce.product.PurchaseRequest;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(OrderRequest orderRequest) {
         var customer = this.customerClient.findCustomerById(orderRequest.customerId())
@@ -44,6 +47,16 @@ public class OrderService {
             );
         }
 
+        paymentClient.requestOrderPayment(
+                new PaymentRequest(
+                        orderRequest.amount(),
+                        orderRequest.paymentMethod(),
+                        order.getId(),
+                        orderRequest.reference(),
+                        customer
+                )
+        );
+
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
                         orderRequest.reference(),
@@ -53,8 +66,6 @@ public class OrderService {
                         purchasedProducts
                 )
         );
-
-
         return order.getId();
     }
 
